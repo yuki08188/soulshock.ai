@@ -1,0 +1,96 @@
+---
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <h3>震魂<span class="gold-text">科技</span></h3>
+      <p class="footer__tagline">原生为核，震魂为翼</p>
+    </div>
+    <div class="footer__links">
+      <div class="footer__col">
+        <h4>产品</h4>
+        <a href="/courses">课程</a>
+        <a href="/apps">应用商城</a>
+        <a href="/services">服务</a>
+      </div>
+      <div class="footer__col">
+        <h4>公司</h4>
+        <a href="/about">关于震魂</a>
+        <a href="/projects">项目</a>
+        <a href="/rd">研发</a>
+      </div>
+      <div class="footer__col">
+        <h4>联系</h4>
+        <a href="/join">加入我们</a>
+        <a href="/join#contact">联系方式</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 震魂科技. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-xl) 0;
+    margin-top: var(--space-2xl);
+  }
+
+  .footer__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .footer__brand h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .footer__tagline {
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+  }
+
+  .footer__links {
+    display: flex;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    min-width: 120px;
+  }
+
+  .footer__col h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer__col a {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .footer__col a:hover {
+    color: var(--color-text);
+  }
+
+  .footer__bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-lg);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>

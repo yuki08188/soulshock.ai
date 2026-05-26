@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="关于震魂 — 震魂科技">
+  <!-- Hero -->
+  <section class="section page-hero">
+    <div class="container">
+      <h1 class="section-title">关于<span class="gold-text">震魂</span></h1>
+      <p class="section-subtitle">震动灵魂的科技</p>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="section">
+    <div class="container">
+      <div class="philosophy">
+        <div class="philosophy__main">
+          <h2>「震魂」不是公司名字</h2>
+          <p>它是每个加入者本来就有的品质。天才、才华、韧性、与别人不同的那一点光——AI 不是要改变你，是帮你亮出它。</p>
+          <div class="philosophy__quote">
+            <p>AI 不是主角——<span class="gold-text">你是</span>。</p>
+            <span class="philosophy__quote-sub">原生为核，震魂为翼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team / Projects placeholder -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">正在<span class="gold-text">做的事</span></h2>
+      <p class="section-subtitle">政府项目 · 商业合作 · 教育工坊</p>
+      <div class="glass-card" style="text-align:center;padding:3rem 2rem;">
+        <p style="color:var(--color-text-secondary)">项目信息更新中</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
+
+  .philosophy {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .philosophy__main h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+
+  .philosophy__main p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+  }
+
+  .philosophy__quote {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    text-align: center;
+  }
+
+  .philosophy__quote p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+  }
+
+  .philosophy__quote-sub {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+</style>
