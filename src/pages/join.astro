@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="加入我们 — 震魂科技">
+  <section class="section" style="padding-top: 8rem;">
+    <div class="container">
+      <h1 class="section-title">加入<span class="gold-text">我们</span></h1>
+      <p class="section-subtitle">你身上有震动灵魂的力量。我们帮你放大它。</p>
+
+      <div class="join-grid">
+        <div class="glass-card join-card">
+          <div class="join-card__icon">🎓</div>
+          <h3>报名课程</h3>
+          <p>从即刻启动包开始，一步步成为 AI 架构师。</p>
+          <ul class="join-card__details">
+            <li>即刻启动包 — ¥88</li>
+            <li>技术陪跑 — ¥198</li>
+            <li>线下深度锻造 — ¥3,980</li>
+          </ul>
+        </div>
+
+        <div class="glass-card join-card">
+          <div class="join-card__icon">💼</div>
+          <h3>企业合作</h3>
+          <p>AI 训练师服务 / 企业培训 / 应用定制开发</p>
+          <p style="color:var(--color-text-muted);font-size:0.85rem;margin-top:var(--space-sm);">联系我们洽谈合作</p>
+        </div>
+
+        <div class="glass-card join-card">
+          <div class="join-card__icon">🔬</div>
+          <h3>研发人才</h3>
+          <p>我们在找前端、后端、AI 工程的伙伴。在校生可先从 AI 工坊开始。</p>
+          <p style="color:var(--color-text-muted);font-size:0.85rem;margin-top:var(--space-sm);">人才梯队：学员 → 开发者 → 正式成员</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .join-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .join-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .join-card__icon {
+    font-size: 2.5rem;
+  }
+
+  .join-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .join-card p {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .join-card__details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .join-card__details li {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .join-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="课程 — 震魂科技">
+  <section class="section" style="padding-top: 8rem;">
+    <div class="container">
+      <h1 class="section-title">课程<span class="gold-text">商城</span></h1>
+      <p class="section-subtitle">从上手到精通，三个阶梯找到你的位置</p>
+
+      <div class="course-detail-grid">
+        <!-- 即刻启动包 -->
+        <div class="glass-card course-detail">
+          <div class="course-detail__header">
+            <span class="course-detail__step">STEP 1</span>
+            <div class="course-detail__price">¥88</div>
+          </div>
+          <h2>即刻启动包</h2>
+          <p class="course-detail__desc">Tina 演讲完，你扫个码。我们远程帮你把 OpenClaw 装好，今晚就能开始用。</p>
+          <ul class="course-detail__features">
+            <li>远程安装 OpenClaw 环境</li>
+            <li>基础配置与运行测试</li>
+            <li>10 分钟搞定，不用自己动手</li>
+          </ul>
+          <a href="/join" class="btn btn-primary">立即购买 ¥88</a>
+        </div>
+
+        <!-- 技术陪跑 -->
+        <div class="glass-card course-detail">
+          <div class="course-detail__header">
+            <span class="course-detail__step">STEP 2</span>
+            <div class="course-detail__price">¥198</div>
+          </div>
+          <h2>技术陪跑</h2>
+          <p class="course-detail__desc">用了一周，开始遇到问题了。社群里有工程师帮你解决环境支持和配置问题。</p>
+          <ul class="course-detail__features">
+            <li>社群技术答疑</li>
+            <li>环境问题远程支持</li>
+            <li>常用问题知识库</li>
+          </ul>
+          <a href="/join" class="btn btn-primary">立即购买 ¥198</a>
+        </div>
+
+        <!-- 线下深度锻造 -->
+        <div class="glass-card course-detail course-detail--featured">
+          <div class="course-detail__header">
+            <span class="course-detail__step">STEP 3</span>
+            <div class="course-detail__price">¥3,980</div>
+          </div>
+          <h2>线下深度锻造</h2>
+          <p class="course-detail__desc">线下封闭营。从会用 AI 的人变成 AI 架构师 / 训练师。编程、剪辑、垂直场景深度构造。</p>
+          <ul class="course-detail__features">
+            <li>AI 架构师实战训练</li>
+            <li>AI 编程 + AI 剪辑</li>
+            <li>垂直领域深度构造</li>
+            <li>结业颁发震魂认证</li>
+          </ul>
+          <a href="/join" class="btn btn-primary">立即报名 ¥3,980 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .course-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .course-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .course-detail--featured {
+    border-color: var(--color-gold);
+  }
+
+  .course-detail__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-detail__step {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    letter-spacing: 0.1em;
+  }
+
+  .course-detail__price {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .course-detail h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .course-detail__desc {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .course-detail__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    flex-grow: 1;
+  }
+
+  .course-detail__features li {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .course-detail__features li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--color-gold);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .course-detail-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

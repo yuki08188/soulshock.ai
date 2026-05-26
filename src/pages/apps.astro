@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="应用商城 — 震魂科技">
+  <section class="section" style="padding-top: 8rem;">
+    <div class="container">
+      <h1 class="section-title">应用<span class="gold-text">商城</span></h1>
+      <p class="section-subtitle">AI 工具，从同学手里来，到你的工作流里去</p>
+
+      <div class="category-tabs">
+        <span class="category-tab category-tab--active">全部</span>
+        <span class="category-tab">🛠 效率工具</span>
+        <span class="category-tab">📚 教育辅助</span>
+        <span class="category-tab">🎬 内容创作</span>
+        <span class="category-tab">🏪 行业专用</span>
+        <span class="category-tab">📱 生活服务</span>
+      </div>
+
+      <div class="apps-empty">
+        <div class="glass-card" style="text-align:center;padding:4rem 2rem;">
+          <p style="font-size:3rem;margin-bottom:1rem;">🚀</p>
+          <h3>应用正在路测中</h3>
+          <p style="color:var(--color-text-secondary);margin-top:0.5rem;">学员产出的首批 AI 工具即将上线，敬请期待</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .category-tab {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-card);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .category-tab:hover {
+    color: var(--color-text);
+    border-color: var(--color-gold);
+  }
+
+  .category-tab--active {
+    background: var(--color-gold);
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+</style>

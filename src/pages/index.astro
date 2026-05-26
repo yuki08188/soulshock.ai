@@ -1,0 +1,308 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">
+        <span class="hero__subtitle-top">原生为核，<span class="gold-text">震魂</span>为翼</span>
+        <span class="hero__subtitle-bottom">AI 不是主角——<span class="gold-text">你是</span>。</span>
+      </h1>
+      <p class="hero__description">
+        你身上有震动灵魂的力量。<br />
+        我们教你驾驭AI——让你的才华被放大，让世界看见它。
+      </p>
+      <div class="hero__actions">
+        <a href="/courses" class="btn btn-primary">浏览课程 →</a>
+        <a href="/apps" class="btn btn-outline">逛应用商城</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="section mission">
+    <div class="container">
+      <div class="mission__grid">
+        <div class="mission__item">
+          <div class="mission__icon gold-text">放大</div>
+          <h3>你不需要被改变</h3>
+          <p>你本来的样子就是最宝贵的。我们要做的就是把你已有的信号调大。</p>
+        </div>
+        <div class="mission__item">
+          <div class="mission__icon gold-text">原生</div>
+          <h3>你本来就很好</h3>
+          <p>AI 不是要把你变成什么人，是帮你证明你本来就是这样的人。</p>
+        </div>
+        <div class="mission__item">
+          <div class="mission__icon gold-text">力</div>
+          <h3>让世界看见你</h3>
+          <p>震魂用 AI 之光，为你聚焦——你的才华被放大，被看见。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Preview -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">从<span class="gold-text">上手</span>到<span class="gold-text">精通</span></h2>
+      <p class="section-subtitle">三个阶梯，一步步从会用 AI 到靠 AI 创造价值</p>
+      <div class="course-cards">
+        <div class="glass-card course-card">
+          <div class="course-card__price">¥<span class="course-card__price-num">88</span></div>
+          <h3>即刻启动包</h3>
+          <p class="course-card__desc">不用动手，我们远程帮你装好 OpenClaw。今晚就能开始玩。</p>
+          <div class="course-card__footer">
+            <span class="course-card__tag">入场券</span>
+            <a href="/courses/start-pack" class="btn btn-outline btn-sm">了解更多</a>
+          </div>
+        </div>
+        <div class="glass-card course-card">
+          <div class="course-card__price">¥<span class="course-card__price-num">198</span></div>
+          <h3>技术陪跑</h3>
+          <p class="course-card__desc">用出问题了有人教。环境支持 + 技术指导，让你真能用起来。</p>
+          <div class="course-card__footer">
+            <span class="course-card__tag">技术指导</span>
+            <a href="/courses/tech-support" class="btn btn-outline btn-sm">了解更多</a>
+          </div>
+        </div>
+        <div class="glass-card course-card course-card--featured">
+          <div class="course-card__price">¥<span class="course-card__price-num">3,980</span></div>
+          <h3>线下深度锻造</h3>
+          <p class="course-card__desc">从会用的人变成能靠它吃饭的人。AI 架构师 / 训练师 / 编程 / 剪辑。</p>
+          <div class="course-card__footer">
+            <span class="course-card__tag">能力重塑</span>
+            <a href="/courses/deep-forge" class="btn btn-primary btn-sm">了解更多 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Store Preview -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">应用<span class="gold-text">商城</span></h2>
+      <p class="section-subtitle">你的同学做出来的 AI 工具，可能正是你需要的</p>
+      <div class="apps-placeholder">
+        <div class="glass-card placeholder-card">
+          <div class="placeholder-icon">🛠</div>
+          <h3>更多应用即将上架</h3>
+          <p>学员产出的 AI 工具正在路测中</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(245, 179, 66, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero__content {
+    position: relative;
+    text-align: center;
+    padding-top: 64px;
+  }
+
+  .hero__title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__subtitle-top {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .hero__subtitle-bottom {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__description {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.8;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Mission */
+  .mission__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .mission__item {
+    text-align: center;
+    padding: var(--space-lg);
+  }
+
+  .mission__icon {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: var(--space-md);
+    display: inline-block;
+    border: 2px solid var(--color-gold);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+  }
+
+  .mission__item h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .mission__item p {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* Courses */
+  .course-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .course-card--featured {
+    border-color: var(--color-gold);
+    position: relative;
+  }
+
+  .course-card--featured::before {
+    content: '推荐';
+    position: absolute;
+    top: -1px;
+    right: var(--space-lg);
+    background: var(--color-gold);
+    color: #0a0a0a;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .course-card__price {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .course-card__price-num {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-text);
+  }
+
+  .course-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .course-card__desc {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .course-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .course-card__tag {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* App placeholder */
+  .apps-placeholder {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .placeholder-card {
+    text-align: center;
+    padding: var(--space-xl);
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .placeholder-card h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .placeholder-card p {
+    color: var(--color-text-secondary);
+  }
+
+  /* Section alt */
+  .section--alt {
+    background: var(--color-bg-alt);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero__subtitle-top {
+      font-size: 2rem;
+    }
+    .hero__subtitle-bottom {
+      font-size: 1.3rem;
+    }
+    .mission__grid,
+    .course-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
