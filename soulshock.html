@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>震魂科技 · SoulShock AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: rgba(201,168,76,0.18);
+      --gold-border: rgba(201,168,76,0.35);
+      --gold-glow: rgba(201,168,76,0.06);
+      --bg: #0a0a0a;
+      --surface: rgba(255,255,255,0.03);
+      --surface-hover: rgba(255,255,255,0.055);
+      --text-primary: #f0ede8;
+      --text-secondary: rgba(240,237,232,0.45);
+      --text-muted: rgba(240,237,232,0.28);
+      --border: rgba(255,255,255,0.07);
+      --nav-h: 60px;
+      --safe-t: env(safe-area-inset-top, 0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-l: env(safe-area-inset-left, 0px);
+      --safe-r: env(safe-area-inset-right, 0px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      padding-left: calc(48px + var(--safe-l));
+      padding-right: calc(48px + var(--safe-r));
+      height: calc(var(--nav-h) + var(--safe-t));
+      padding-top: var(--safe-t);
+      background: rgba(10,10,10,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 28px; height: 28px;
+      border: 1.5px solid var(--gold-border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      font-size: 13px;
+      padding: 7px 20px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--gold-border);
+      border-radius: 6px;
+      color: var(--gold);
+      text-decoration: none;
+      background: var(--gold-dim);
+      transition: background 0.2s, border-color 0.2s;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .nav-cta:hover {
+      background: rgba(201,168,76,0.26);
+      border-color: rgba(201,168,76,0.55);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      z-index: 101;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--gold); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--gold); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(100px + var(--nav-h) + var(--safe-t)) 16px 80px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -58%);
+      width: min(900px, 150vw);
+      height: min(600px, 100vw);
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.07) 0%, rgba(201,168,76,0.025) 35%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 0%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 0%, transparent 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      background: var(--gold-dim);
+      font-size: clamp(11px, 3vw, 12px);
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse-dot 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 10vw, 82px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gradient-text {
+      background: linear-gradient(120deg, #e8dcc8 0%, #c9a84c 28%, #f0e9d4 45%, #c9a84c 62%, #e8dcc8 100%);
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 100% 50%; }
+      50% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(15px, 4vw, 18px);
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      position: relative;
+      z-index: 1;
+      font-weight: 300;
+    }
+
+    .hero-subtitle em { font-style: normal; color: rgba(201,168,76,0.75); }
+
+    .hero-actions { display: flex; gap: 14px; position: relative; z-index: 1; }
+
+    .btn-primary {
+      padding: 14px 28px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 7px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-secondary {
+      padding: 14px 28px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--text-primary); transform: translateY(-1px); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: calc(24px + var(--safe-b));
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.28;
+    }
+    .scroll-hint span { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); }
+    .scroll-line {
+      width: 1px; height: 32px;
+      background: linear-gradient(to bottom, var(--text-primary), transparent);
+      animation: scroll-drop 2s ease-in-out infinite;
+    }
+    @keyframes scroll-drop {
+      0% { opacity: 0; transform: scaleY(0) translateY(-8px); transform-origin: top; }
+      40% { opacity: 1; }
+      100% { opacity: 0; transform: scaleY(1) translateY(0); transform-origin: top; }
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 100px 24px;
+      padding-left: calc(24px + var(--safe-l));
+      padding-right: calc(24px + var(--safe-r));
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 6vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.018em;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+
+    /* ─── PROJECT CARDS ─── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project-card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      padding: 28px 24px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.3s, background 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 120% 80% at 50% 0%, var(--gold-glow), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold-border);
+      background: var(--surface-hover);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.12);
+    }
+    .project-card:hover::before { opacity: 1; }
+
+    .card-icon {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .card-icon svg {
+      width: 32px; height: 32px;
+      opacity: 0.7;
+      transition: opacity 0.3s, filter 0.3s;
+    }
+    .project-card:hover .card-icon svg {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .card-arrow {
+      position: absolute;
+      top: 24px; right: 22px;
+      font-size: 15px;
+      color: var(--text-muted);
+      transition: color 0.3s, transform 0.3s;
+    }
+    .project-card:hover .card-arrow { color: var(--gold); transform: translate(2px, -2px); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: calc(100% - 48px);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 auto;
+      max-width: 1072px;
+    }
+
+    /* ─── APP CARDS ─── */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .app-card {
+      padding: 24px 20px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    }
+    .app-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      background: var(--surface-hover);
+      transform: translateY(-3px);
+    }
+
+    .app-tag {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 6px 12px 7px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.28);
+      color: #c9a84c;
+    }
+
+    .app-tag-zh {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+    }
+    .app-tag-en {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      opacity: 0.65;
+      margin-top: 1px;
+    }
+
+    .app-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 9px;
+      letter-spacing: -0.01em;
+    }
+
+    .app-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.72;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    .app-agents { display: flex; flex-wrap: wrap; gap: 5px; }
+    .app-agent-chip {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      padding-left: calc(48px + var(--safe-l));
+      padding-right: calc(48px + var(--safe-r));
+      padding-bottom: calc(40px + var(--safe-b));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+    .footer-brand { font-size: 14px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.06em; }
+    .footer-copy { font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; }
+
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ─── FADE-IN ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) { .app-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px)  { .project-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; padding-left: calc(16px + var(--safe-l)); padding-right: calc(16px + var(--safe-r)); }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: calc(var(--nav-h) + var(--safe-t));
+        left: 0; right: 0; bottom: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        background: rgba(5,5,5,0.96);
+        backdrop-filter: blur(24px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+      .nav-links.open { opacity: 1; pointer-events: auto; }
+      .nav-links a { font-size: 18px; font-weight: 500; }
+      .nav-cta { display: none; }
+      .project-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 16px; padding-left: calc(16px + var(--safe-l)); padding-right: calc(16px + var(--safe-r)); }
+      .section-desc { margin-bottom: 36px; }
+      footer { flex-direction: column; gap: 20px; align-items: flex-start; padding: 32px 20px; padding-bottom: calc(32px + var(--safe-b)); }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: calc(80px + var(--nav-h) + var(--safe-t)) 16px 70px; }
+      .hero-title { font-size: clamp(32px, 9vw, 40px); }
+      .hero-actions { flex-direction: column; width: 100%; max-width: 280px; }
+      .hero-actions .btn-primary, .hero-actions .btn-secondary { width: 100%; justify-content: center; }
+      .section-title { font-size: 22px; }
+      .app-grid { gap: 10px; }
+      .app-card { padding: 20px 16px 18px; }
+      .scroll-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">震</div>
+    <span class="nav-logo-text">SoulShock</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#strength" onclick="closeNav()">产品</a></li>
+    <li><a href="#apps" onclick="closeNav()">应用</a></li>
+    <li><a href="#" onclick="closeNav()">关于我们</a></li>
+  </ul>
+  <a class="nav-cta" href="#">加入我们</a>
+  <button class="nav-toggle" id="navToggle" aria-label="菜单" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    震魂AI 「放大 · 原生 · 力」
+  </div>
+  <h1 class="hero-title">
+    <span class="gradient-text">原生为核，震魂为翼。</span>
+  </h1>
+  <p class="hero-subtitle">
+    你本来就有价值。<br/>
+    震魂用 <em>AI 之光</em>，为你添翼。
+  </p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#strength">探索产品</a>
+    <a class="btn-secondary" href="#apps">应用场景</a>
+  </div>
+  <div class="scroll-hint">
+    <span>向下</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- ── 实战矩阵 ── -->
+<section id="strength">
+  <div class="fade-up">
+    <p class="section-label">实战矩阵</p>
+    <h2 class="section-title">震魂不生产概念，<br/>只交付价值。</h2>
+    <p class="section-desc">从知识平台到智能工具，每一行代码都在真实场景中为真实的人创造改变。</p>
+  </div>
+  <div class="project-grid fade-up">
+
+    <a class="project-card" href="https://www.sgsyen.com/" target="_blank" rel="noopener">
+      <span class="card-arrow">↗</span>
+      <div class="card-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="10" r="3.5" stroke="#c9a84c" stroke-width="1.4"/>
+          <circle cx="7" cy="26" r="3.5" stroke="#c9a84c" stroke-width="1.4"/>
+          <circle cx="29" cy="26" r="3.5" stroke="#c9a84c" stroke-width="1.4"/>
+          <line x1="18" y1="13.5" x2="7" y2="22.5" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.5"/>
+          <line x1="18" y1="13.5" x2="29" y2="22.5" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.5"/>
+          <line x1="10.5" y1="26" x2="25.5" y2="26" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.5"/>
+          <circle cx="18" cy="10" r="1.5" fill="#c9a84c" fill-opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="card-title">雍彻智库</div>
+      <p class="card-desc">深度内容与知识沉淀平台。将碎片化的思考系统化，让认知资产真正属于你自己。</p>
+    </a>
+
+    <a class="project-card" href="https://www.sgsyen.com/gemini/calculator/" target="_blank" rel="noopener">
+      <span class="card-arrow">↗</span>
+      <div class="card-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 28 L18 8 L28 28" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="11" y1="22" x2="25" y2="22" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.5"/>
+          <circle cx="28" cy="10" r="3" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+          <line x1="28" y1="7.5" x2="28" y2="12.5" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.6"/>
+          <line x1="25.5" y1="10" x2="30.5" y2="10" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="card-title">AI 智能计算器</div>
+      <p class="card-desc">不只是算数。由 Gemini 驱动的对话式计算引擎，读懂你的意图，给出真正有用的答案。</p>
+    </a>
+
+    <a class="project-card" href="https://www.halfsphere.com/guest" target="_blank" rel="noopener">
+      <span class="card-arrow">↗</span>
+      <div class="card-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 18 A12 12 0 0 1 30 18" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="6" y1="18" x2="30" y2="18" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.4"/>
+          <path d="M14 18 A4 12 0 0 1 22 18" stroke="#c9a84c" stroke-width="1.2" stroke-opacity="0.6" stroke-linecap="round"/>
+          <circle cx="18" cy="18" r="12" stroke="#c9a84c" stroke-width="1.4" stroke-opacity="0.25"/>
+          <circle cx="18" cy="18" r="2" fill="#c9a84c" fill-opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="card-title">半球 · Halfsphere</div>
+      <p class="card-desc">跨越语言与文化的连接平台。在东西方之间找到共鸣，让每一次相遇都不只停留在表面。</p>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── 智能矩阵 ── -->
+<section id="apps">
+  <div class="fade-up">
+    <p class="section-label">智能矩阵</p>
+    <h2 class="section-title">AI，用在刀刃上。</h2>
+    <p class="section-desc">震魂的能力不是炫技，而是嵌入你真实工作与生活的每一个关键时刻。</p>
+  </div>
+  <div class="app-grid fade-up">
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">内容创作</span><span class="app-tag-en">Creative Generation</span></div>
+      <div class="app-title">从零到一的生成引擎</div>
+      <p class="app-desc">文本、图像、音视频的全链路生成能力，让创意不再卡在"表达"这一关。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">爆款文案官</span><span class="app-agent-chip">海报设计师</span>
+        <span class="app-agent-chip">短视频脚本家</span><span class="app-agent-chip">代码生成器</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">研究分析</span><span class="app-tag-en">Research &amp; Insight</span></div>
+      <div class="app-title">让数据开口说话</div>
+      <p class="app-desc">信息搜集、清洗、推理到报告一气呵成，把原本要花三天的调研压缩到三小时。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">竞品调研员</span><span class="app-agent-chip">财报分析师</span>
+        <span class="app-agent-chip">学术文献助手</span><span class="app-agent-chip">趋势预测员</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">流程执行</span><span class="app-tag-en">Workflow Automation</span></div>
+      <div class="app-title">重复的事，不必亲自做</div>
+      <p class="app-desc">跨软件操作、API 调用、表单填报——凡是有规律的事，都可以交给 AI 形成闭环。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">差旅预订员</span><span class="app-agent-chip">发票整理师</span>
+        <span class="app-agent-chip">社媒发布员</span><span class="app-agent-chip">CRM录入员</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">交互陪伴</span><span class="app-tag-en">Interaction &amp; Companion</span></div>
+      <div class="app-title">记得你，懂得你</div>
+      <p class="app-desc">有长期记忆、有情感感知、有引导能力。不是工具，是真正陪你思考的伙伴。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">心理疏导员</span><span class="app-agent-chip">语言陪练官</span>
+        <span class="app-agent-chip">苏格拉底导师</span><span class="app-agent-chip">创意脑暴伙伴</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">客户服务</span><span class="app-tag-en">Customer Service</span></div>
+      <div class="app-title">永不下班的前台</div>
+      <p class="app-desc">7×24 全天候接待、精准分流、投诉处理，让每一个用户感受到被认真对待。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">7x24客服代表</span><span class="app-agent-chip">投诉处理专员</span>
+        <span class="app-agent-chip">售前咨询顾问</span><span class="app-agent-chip">反馈分析员</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">运营增长</span><span class="app-tag-en">Operations &amp; Growth</span></div>
+      <div class="app-title">把流量变成留量</div>
+      <p class="app-desc">社群激活、活动策划、转化率调优——增长不靠感觉，靠持续的、有节奏的运营动作。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">社群活跃官</span><span class="app-agent-chip">活动策划师</span>
+        <span class="app-agent-chip">SEO优化专家</span><span class="app-agent-chip">私域流量管家</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">专业辅助</span><span class="app-tag-en">Professional Support</span></div>
+      <div class="app-title">垂直领域的得力助手</div>
+      <p class="app-desc">法律、医疗、金融等高门槛领域，AI 不替代专家，但让你在见专家前先想清楚。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">合同审查员</span><span class="app-agent-chip">病历整理助手</span>
+        <span class="app-agent-chip">税务合规顾问</span><span class="app-agent-chip">简历筛选员</span>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-tag"><span class="app-tag-zh">系统运维</span><span class="app-tag-en">System &amp; DevOps</span></div>
+      <div class="app-title">技术层的静默守卫</div>
+      <p class="app-desc">日志分析、漏洞扫描、资源调度——问题在影响用户之前就已经被发现并处理。</p>
+      <div class="app-agents">
+        <span class="app-agent-chip">日志分析员</span><span class="app-agent-chip">安全漏洞扫描员</span>
+        <span class="app-agent-chip">服务器监控官</span><span class="app-agent-chip">自动化测试员</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">
+    <span class="footer-brand">震魂科技 · SoulShock AI</span>
+    <span class="footer-copy">© 2026 SoulShock Technology. All rights reserved.</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.sgsyen.com/" target="_blank">雍彻智库</a>
+    <a href="https://www.halfsphere.com/guest" target="_blank">半球</a>
+    <a href="#">联系我们</a>
+  </div>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navToggle').classList.toggle('active');
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navToggle').classList.remove('active');
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const siblings = el.parentElement.querySelectorAll('.fade-up');
+        let delay = 0;
+        siblings.forEach((sib, idx) => { if (sib === el) delay = idx * 60; });
+        setTimeout(() => el.classList.add('visible'), delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
